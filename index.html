@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>چت ناشناس</title>
+    <style>
+      body {
+        background: linear-gradient(45deg, #ffc400, #ffa500);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        font-family: "Arial", sans-serif;
+        color: #cacaca;
+        overflow: hidden;
+        direction: rtl;
+      }
+      .hamburger-menu {
+        position: absolute;
+        top: 2%;
+        right: 2%;
+        cursor: pointer;
+        font-size: 40px;
+        color: white;
+      }
+      .clock{
+        color:white;
+        position: absolute;
+        top: 3%;
+        left: 2%;
+        font-size: 30px;
+      }
+      .menu {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 55px;
+        background: rgba(255, 255, 255, 0.137);
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .menu a {
+        padding: 10px;
+        font-size: 2rem;
+        display: block;
+        margin: 5px 0;
+        text-decoration: none;
+      }
+      .theme-button {
+        margin: 5px;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      #container {
+        text-align: center;
+        width: 50%;
+        margin: 10% auto;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 20px;
+      }
+      #container input[type="text"] {
+        width: 80%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+      }
+      #container button[type="button"] {
+        width: 60%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #container button[type="button"]:hover {
+        background-color: rgba(14, 13, 13, 0.39);
+        color: whitesmoke;
+      }
+      .info-div {
+        direction: ltr;
+        position: fixed;
+        top: 15%;
+        left: 50%;
+        transform: translate(-50%, -5%);
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        z-index: 999;
+      }
+      .theme-red {
+        background: red;
+        color: white;
+      }
+      .theme-green {
+        background: green;
+        color: white;
+      }
+      .theme-blue {
+        background: #00ffea;
+        color: hwb(0 0% 100%);
+      }
+      .theme-floral {
+        background: floralwhite;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="clock" class="clock">00:00:00</div>
+    <div class="hamburger-menu" onclick="toggleMenu()">☰</div>
+    <div class="menu" id="menu">
+      <a href="#" onclick="showInfo()">اطلاعات سازنده</a>
+      <a href="#" onclick="toggleThemeMenu()">تغییر تم</a>
+      <div id="theme-menu" style="display: none">
+        <button class="theme-button theme-red" onclick="changeTheme('red')">
+          قرمز
+        </button>
+        <button class="theme-button theme-green" onclick="changeTheme('green')">
+          سبز
+        </button>
+        <button class="theme-button theme-blue" onclick="changeTheme('blue')">
+          آبی
+        </button>
+        <button
+          class="theme-button theme-floral"
+          onclick="changeTheme('floral')"
+        >
+          گلبرگی
+        </button>
+      </div>
+    </div>
+
+    <div id="container">
+      <h1>پیام ناشناس به پژواک تیم</h1>
+      <p>شما میتوانید ناشناس به تیم ما پیام بدید</p>
+      <input type="text" id="message" placeholder="لطفا پیام خود را بنویسید" />
+      <button type="button" onclick="sendMessage()">ارسال</button>
+    </div>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+      function toggleMenu() {
+        const menu = document.getElementById("menu");
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+      }
+
+      function showInfo() {
+        const infoContent = `
+                <p>🎃𝕋𝕙𝕖 𝕓𝕖𝕤𝕥 ℙ𝕣𝕠𝕘𝕣𝕒𝕞𝕞𝕚𝕟𝕘 𝕔𝕙𝕒𝕟𝕟𝕖𝕝...</p>
+                <p>🎃 • <a href="https://t.me/PejvakSource" target="_blank">@PejvakSource</a></p>
+            `;
+        const infoDiv = document.createElement("div");
+        infoDiv.className = "info-div";
+        infoDiv.innerHTML = infoContent;
+        document.body.appendChild(infoDiv);
+        setTimeout(() => {
+          document.body.removeChild(infoDiv);
+        }, 3000);
+      }
+
+      function toggleThemeMenu() {
+        const themeMenu = document.getElementById("theme-menu");
+        themeMenu.style.display =
+          themeMenu.style.display === "block" ? "none" : "block";
+      }
+
+      function changeTheme(theme) {
+        let background;
+        switch (theme) {
+          case "red":
+            background = "linear-gradient(45deg, #FF0000, #FF6347)";
+            break;
+          case "green":
+            background = "linear-gradient(45deg, #008000, #00FF00)";
+            break;
+          case "blue":
+            background = "linear-gradient(45deg, #00ffea, #00ffeaab)";
+            break;
+          case "floral":
+            background = "linear-gradient(45deg, #FFFAF0, #FFD700)";
+            break;
+          default:
+            background = "linear-gradient(45deg, #FFD700, #FFA500)";
+        }
+        document.body.style.background = background;
+      }
+
+      function sendMessage() {
+        const message = document.getElementById("message").value;
+        const token = "YOUR_TOKEN";
+        const chatId = "YOUR_CHAT_ID";
+        const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(
+          message
+        )}`;
+
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.ok) {
+              alert("پیام ارسال شد!");
+            } else {
+              alert("خطا در ارسال پیام.");
+            }
+          })
+          .catch((error) => {
+            alert("خطا در ارسال پیام.");
+            console.error("Error:", error);
+          });
+      }
+        setInterval(updateClock, 1000);
+        updateClock();
+        updateCalendar();
+    </script>
+  </body>
+</html>
